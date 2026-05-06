@@ -6,6 +6,7 @@ ollama run deepseek-coder-v2
 
 # Отладка
 ```bash
+cd aism
 nix-shell
 trunk serve --port 3000
 ```

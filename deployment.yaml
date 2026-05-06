@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aism
+  labels:
+    app: aism
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aism
+  template:
+    metadata:
+      labels:
+        app: aism
+    spec:
+      containers:
+      - name: landing
+        image: 192.168.2.229:5000/aism:v1.0.1
+        ports:
+        - containerPort: 80
+        imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: aism-service
+spec:
+  type: NodePort 
+  selector:
+    app: aism
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30100 # Сайт будет доступен на порту 30100 каждого узла кластера

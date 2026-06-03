@@ -5,17 +5,19 @@ use gloo_net::http::Request;
 use web_sys::console;
 
 mod es_logger;
-mod tabs;
+mod tabs; 
 
 use tabs::chat::ChatTab;
 use tabs::file_chat::FileChatTab;
 use tabs::fine_tune::FineTuneTab;
+use tabs::dashboard::DashboardTab;
 
 #[derive(Clone, Copy, PartialEq)]
 enum MainTab {
     Chat,
     FileChat,
     FineTune,
+    Dashboard,
 }
 
 // Структуры для запроса к Ollama API
@@ -85,6 +87,12 @@ pub fn App() -> impl IntoView {
     style=move || format!("text-align: left; padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; background: {}; color: white;", 
         if active_tab.get() == MainTab::FineTune { "#3182ce" } else { "transparent" })
 > "⚙️ Дообучение модели" </button>
+
+<button 
+    on:click=move |_| set_active_tab.set(MainTab::Dashboard)
+    style=move || format!("text-align: left; padding: 12px; border: none; border-radius: 6px; cursor: pointer; font-size: 14px; background: {}; color: white;", 
+        if active_tab.get() == MainTab::Dashboard { "#3182ce" } else { "transparent" })
+> "📊 Панель состояния" </button>
                 </div>
             </div>
 
@@ -94,6 +102,7 @@ pub fn App() -> impl IntoView {
                     MainTab::Chat => view! { <ChatTab /> }.into_any(),
                     MainTab::FileChat => view! { <FileChatTab /> }.into_any(),
                     MainTab::FineTune => view! { <FineTuneTab /> }.into_any(),
+                    MainTab::Dashboard => view! { <DashboardTab /> }.into_any(),
                 }}
             </div>
         </div>

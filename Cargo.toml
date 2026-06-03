@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+chrono = { version = "0.4.44", features = ["wasmbind", "serde"] }
 # Добавьте features для работы с json и http
 gloo-net = { version = "0.6.0", features = ["http", "json"] }
 # Добавьте этот крэйт, он используется в коде для TimeoutFuture
